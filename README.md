@@ -3,6 +3,9 @@ My submission for CSULB's week of RSCA circuit and coding challenge in 2022. The
 
 The program reads and displays temperature in celcius and distance in inches in the serial moitor. Proximity lights, the serial monitor, and the buzzer react based on distance. When a large enough shadow is cast, the the "engine" red LED will light.
 
+You can see my code in action with this YouTube Link:
+https://youtu.be/oHdWEwZGvmg
+
 If you can, display the bottom as source blob for the chart below.
 
 Pin	(Function)
