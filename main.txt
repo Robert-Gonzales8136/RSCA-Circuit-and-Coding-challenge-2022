@@ -1,0 +1,81 @@
+// C++ code
+//
+#define echoPin 12
+#define trigPin 11
+
+long duration;
+float distance;
+int tempSensor = A0;
+const int lightSensor = A1;
+
+const int SENSORMAX = 358;
+const int SENSORMIN = 20;
+const int TEMPMAX = 125;
+const int TEMPMIN = -40;
+void setup()
+{
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+  pinMode(5,OUTPUT);
+}
+
+void loop()
+{
+  
+  //Send ping
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  //read ping, reurn sound travel time
+  duration = pulseIn(echoPin, HIGH);
+  //calculate distance of sound travel there and back
+  distance = duration * 0.013386 / 2;Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" in");
+  
+  if(distance > 50){
+    digitalWrite (3,LOW);
+    digitalWrite (4,LOW);
+    digitalWrite (2,HIGH); 
+    Serial.println("Too far");
+    digitalWrite (5,LOW);
+  }
+  
+  if(distance < 50 && distance > 10){
+    digitalWrite (2,LOW);
+    digitalWrite (4,LOW);
+    digitalWrite (3,HIGH);
+    Serial.println("Watch out!");
+    digitalWrite (5,LOW);
+  }
+  
+  if (distance < 10){
+    digitalWrite (2,LOW);
+    digitalWrite (3,LOW);
+    digitalWrite (4,HIGH);
+    Serial.println("Save youself!");
+    digitalWrite (5,HIGH);
+    
+  }
+  
+  int sensorReading = analogRead(tempSensor);
+  int tempC = map(sensorReading, SENSORMIN, SENSORMAX, TEMPMIN, TEMPMAX);
+  //Serial.println(sensorReading);
+  Serial.print("The temp in Celcius is ");
+  Serial.println(tempC);
+  
+  int brightness = analogRead(lightSensor);
+  Serial.println(brightness);
+  if (brightness < 930){
+    digitalWrite(13, HIGH);
+    Serial.println("ignition!");
+  }
+  else{
+    digitalWrite(13, LOW);
+    
+  }
+    
+}
